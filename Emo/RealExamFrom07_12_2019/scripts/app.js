@@ -1,23 +1,15 @@
 import * as req from "./requester.js";
+import { getHome } from "../controllers/homeController.js";
+
+export function setHeaderInfo(ctx) {
+  ctx.isAuth = sessionStorage.getItem("authtoken") !== null;
+  ctx.username = sessionStorage.getItem("username");
+}
 
 const app = Sammy("body", function() {
   this.use("Handlebars", "hbs");
 
-  this.get("#/", function(ctx) {
-    debugger;
-    setHeaderInfo(ctx);
-
-    if (ctx.isAuth) {
-      debugger;
-      req.get("appdata", "treks", "Kinvey").then(data => {
-        debugger;
-        ctx.treks = data;
-        this.loadPartials(getPartials()).partial("./views/home.hbs");
-      });
-    } else {
-      this.loadPartials(getPartials()).partial("./views/home.hbs");
-    }
-  });
+  this.get("#/", getHome);
 
   //create Trek
   this.get("#/create", function(ctx) {
@@ -204,10 +196,7 @@ const app = Sammy("body", function() {
   function messages(text) {
     return window.confirm(text);
   }
-  function setHeaderInfo(ctx) {
-    ctx.isAuth = sessionStorage.getItem("authtoken") !== null;
-    ctx.username = sessionStorage.getItem("username");
-  }
+
 
   function saveAuthInfo(ctx) {
     sessionStorage.setItem("authtoken", ctx._kmd.authtoken);
