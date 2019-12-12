@@ -11,3 +11,6 @@ export function getTemplate(path, context) {
     })
 }
 
+export function messages(text) {
+    return window.confirm(text);
+  }

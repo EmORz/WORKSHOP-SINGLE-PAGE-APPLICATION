@@ -5,11 +5,9 @@ import { getAll } from "../models/treksModels.js";
 
 //get
 export async function getLogin(ctx) {
-  // debugger
   helper.getTemplate("auth/login.hbs", ctx);
 }
 export async function getRegister(ctx) {
-  debugger;
   helper.getTemplate("auth/register.hbs", ctx);
 }
 export function getLogout(ctx) {
@@ -43,7 +41,6 @@ export function postLogin(ctx) {
     })
     .catch(console.error);
 }
-
 export function postRegister(ctx) {
   debugger;
   register(ctx)
@@ -53,11 +50,9 @@ export function postRegister(ctx) {
     })
     .catch(console.error);
 }
-
 function messages(text) {
   return window.confirm(text);
 }
-
 function saveAuthInfo(ctx) {
   sessionStorage.setItem("authtoken", ctx._kmd.authtoken);
   sessionStorage.setItem("username", ctx.username);
